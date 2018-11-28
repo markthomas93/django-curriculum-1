@@ -17,6 +17,7 @@ brew install python3
 ## pip (Python Index Package) 설치
 https://pip.pypa.io/en/stable/installing/#upgrading-pip
 ```sh
+# pip 버전 올리기 (현재 버전 18.1)
 python3 -m pip install -U pip
 ```
 
@@ -25,16 +26,19 @@ python3 -m pip install -U pip
 python3 -m pip install -U pylint --user
 ```
 
-# Djang
+# Django
 
-## Djang 설치
+## Django 추천 버전
+https://docs.djangoproject.com/ko/2.1/faq/install/#faq-python-version-support
+
+## Django 설치
 https://www.djangoproject.com/download/
 ```sh
 pip install Django==2.1.3
 ```
 
-## Djang 확인
-https://docs.djangoproject.com/en/2.1/intro/install/
+## Django 확인
+https://docs.djangoproject.com/ko/2.1/intro/install/
 ```sh
 python3
 >>>
