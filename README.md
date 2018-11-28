@@ -53,7 +53,28 @@ python3 -m django --version
 ## 프로젝트 생성
 https://docs.djangoproject.com/ko/2.1/intro/tutorial01/
 ```sh
-django-admin startproject djangoTutorial
+django-admin startproject django_tutorial
+```
+
+## .gitignore
+```gitignore
+.DS_Store
+
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw*
+
+# __pycache__
+__pycache__
+
+# db.sqlite3
+db.sqlite3
+
 ```
 
 ## 서버 실행
@@ -87,7 +108,7 @@ urlpatterns = [
 
 ```
 
-/djangoTutorial/urls.py
+/django_tutorial/urls.py
 ```diff
 - from django.urls import path
 + from django.urls import include, path
@@ -96,6 +117,30 @@ urlpatterns = [
 ```python
     path('polls/', include('polls.urls')),
 ```
+
+## Database Setting
+https://docs.djangoproject.com/ko/2.1/ref/settings/#std:setting-DATABASES
+/django_tutorial/settings.py
+
+### MySQL DB API Drivers
+https://docs.djangoproject.com/ko/2.1/ref/databases/#mysql-db-api-drivers
+```sh
+pip install mysqlclient
+```
+
+```python
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'mydatabase',
+        'USER': 'mydatabaseuser',
+        'PASSWORD': 'mypassword',
+        'HOST': '127.0.0.1',
+        'PORT': '3306',
+    }
+}
+```
+
 
 ## Migrate 실행
 https://docs.djangoproject.com/ko/2.1/intro/tutorial02/
@@ -118,7 +163,7 @@ class Choice(models.Model):
 ```
 
 ## Polls 모델 활성화
-/djangoTutorial/settings.py
+/django_tutorial/settings.py
 ```python
 INSTALLED_APPS = [
     'polls.apps.PollsConfig',
@@ -141,7 +186,7 @@ python3 manage.py migrate
 
 ## Terminal에서 django 명령 실행 시키기
 ```sh
-# /djangoTutorial/settings.py 파일을 import 하고 python을 실행한 것과 같다.
+# /django_tutorial/settings.py 파일을 import 하고 python을 실행한 것과 같다.
 python3 manage.py shell
 ```
 
@@ -714,7 +759,7 @@ class Question(models.Model):
 ```
 
 ## Admin change template path
-/djangoTutorial/settings.py
+/django_tutorial/settings.py
 ```diff
 TEMPLATES = [
     {
@@ -734,9 +779,9 @@ cd {해당경로}/contrib/admin/templates/admin
 open .
 ```
 
-/djangoTutorial/templates/admin 폴더 생성 후 복사하기
+/django_tutorial/templates/admin 폴더 생성 후 복사하기
 
-/djangoTutorial/templates/admin/base_site.html
+/django_tutorial/templates/admin/base_site.html
 ```html
 <!-- <h1 id="site-name"><a href="{% url 'admin:index' %}">{{ site_header|default:_('Semin administration') }}</a></h1> -->
 <h1 id="site-name"><a href="{% url 'admin:index' %}">Semin admin</a></h1>
