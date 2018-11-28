@@ -146,6 +146,12 @@ DATABASES = {
 https://docs.djangoproject.com/ko/2.1/intro/tutorial02/
 ```sh
 python3 manage.py migrate
+
+# mysql>
+SHOW DATABASES;
+USE DJANGO_TUTORIAL;
+SHOW TABLES;
+# mysql>
 ```
 
 ## Polls 모델 생성
@@ -193,6 +199,7 @@ python3 manage.py shell
 ```python
 from polls.models import Choice, Question
 
+# question 개수 0개
 Question.objects.all()
 
 from django.utils import timezone
@@ -200,12 +207,21 @@ from django.utils import timezone
 q = Question(question_text="What's new?", pub_date=timezone.now())
 q.save()
 
+# mysql>
+SELECT * FROM polls_question;
+# mysql>
+
 q.id
 q.question_text
 q.pub_date
 q.question_text = "What's up?"
 q.save()
 
+# mysql>
+SELECT * FROM polls_question;
+# mysql>
+
+# question 개수 1개
 Question.objects.all()
 ```
 
@@ -252,6 +268,11 @@ q.was_published_recently()
 
 q.choice_set.all()
 q.choice_set.create(choice_text='Not much', votes=0)
+
+# mysql>
+SELECT * FROM polls_choice;
+# mysql>
+
 q.choice_set.create(choice_text='The sky', votes=0)
 c = q.choice_set.create(choice_text='Just hacking again', votes=0)
 c.question
