@@ -219,6 +219,8 @@ from django.utils import timezone
 
 q = Question(question_text="What's new?", pub_date=timezone.now())
 q.save()
+q.delete()
+q.save()
 
 # mysql>
 SELECT * FROM polls_question;
