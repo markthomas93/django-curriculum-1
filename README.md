@@ -307,6 +307,7 @@ c.delete() # DB 해당 레코드 삭제
 python3 manage.py createsuperuser
 ```
 ```sql
+# mysql>
 SELECT * FROM auth_user;
 ```
 
