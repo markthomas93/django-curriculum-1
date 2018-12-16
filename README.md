@@ -176,6 +176,7 @@ class Question(models.Model):
 
 class Choice(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
+      # models.CASCADE는 부모인 Question 레코드가 지워지면 자식인 Choice 레코드 모두를 지우겠다는 뜻이다.
     choice_text = models.CharField(max_length=200)
     votes = models.IntegerField(default=0)
 
