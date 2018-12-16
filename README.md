@@ -218,8 +218,8 @@ Question.objects.all()
 from django.utils import timezone
 
 q = Question(question_text="What's new?", pub_date=timezone.now())
+q
 q.save() # DB 해당 레코드 생성
-# q.delete() # DB 해당 레코드 삭제
 
 # mysql>
 SELECT * FROM polls_question;
@@ -296,7 +296,7 @@ q.choice_set.count()
 Choice.objects.filter(question__pub_date__year=current_year)
 
 c = q.choice_set.filter(choice_text__startswith='Just hacking')
-c.delete()
+c.delete() # DB 해당 레코드 삭제
 ```
 
 ## Polls Admin에 등록
