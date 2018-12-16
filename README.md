@@ -136,7 +136,7 @@ https://www.lfd.uci.edu/~gohlke/pythonlibs/#mysqlclient
 python이 32비트인지 64인지 확인 후에 mysqlclient-1.3.13-cp37-cp37m-win32.whl 다운로드
 
 ```cmd
-# 해당 경로에서
+# 다운 받은 경로에서
 pip install mysqlclient-1.3.13-cp37-cp37m-win32.whl
 ```
 
