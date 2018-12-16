@@ -120,7 +120,6 @@ urlpatterns = [
 
 ## Database Setting
 https://docs.djangoproject.com/ko/2.1/ref/settings/#std:setting-DATABASES
-/django_tutorial/settings.py
 
 ### MySQL DB API Drivers
 https://docs.djangoproject.com/ko/2.1/ref/databases/#mysql-db-api-drivers
@@ -128,6 +127,7 @@ https://docs.djangoproject.com/ko/2.1/ref/databases/#mysql-db-api-drivers
 pip install mysqlclient
 ```
 
+/django_tutorial/settings.py
 ```python
 DATABASES = {
     'default': {
