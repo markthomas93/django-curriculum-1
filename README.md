@@ -123,8 +123,19 @@ https://docs.djangoproject.com/ko/2.1/ref/settings/#std:setting-DATABASES
 
 ### MySQL DB API Drivers
 https://docs.djangoproject.com/ko/2.1/ref/databases/#mysql-db-api-drivers
+
 ```sh
 pip install mysqlclient
+```
+
+#### 윈도우에서 설치가 안될 경우
+http://lemontia.tistory.com/756
+
+python이 32비트인지 64인지 확인 후에 mysqlclient-1.3.13-cp37-cp37m-win32.whl 다운로드
+
+```cmd
+# 해당 경로에서
+pip install mysqlclient-1.3.13-cp37-cp37m-win32.whl
 ```
 
 /django_tutorial/settings.py
