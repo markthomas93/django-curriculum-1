@@ -218,9 +218,8 @@ Question.objects.all()
 from django.utils import timezone
 
 q = Question(question_text="What's new?", pub_date=timezone.now())
-q.save()
-q.delete()
-q.save()
+q.save() # DB 해당 레코드 생성
+# q.delete() # DB 해당 레코드 삭제
 
 # mysql>
 SELECT * FROM polls_question;
