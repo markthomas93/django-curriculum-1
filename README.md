@@ -131,6 +131,8 @@ pip install mysqlclient
 #### 윈도우에서 설치가 안될 경우
 http://lemontia.tistory.com/756
 
+https://www.lfd.uci.edu/~gohlke/pythonlibs/#mysqlclient
+
 python이 32비트인지 64인지 확인 후에 mysqlclient-1.3.13-cp37-cp37m-win32.whl 다운로드
 
 ```cmd
