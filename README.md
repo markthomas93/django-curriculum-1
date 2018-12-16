@@ -238,7 +238,7 @@ SELECT * FROM polls_question;
 Question.objects.all()
 ```
 
-### Polls 모델
+### Polls 모델에서 사용가능한 함수 추가
 /polls/models.py
 ```python
 import datetime
@@ -299,6 +299,8 @@ c.delete()
 ```
 
 ## Polls Admin에 등록
+
+### Admin user 등록
 ```sh
 python3 manage.py createsuperuser
 ```
@@ -345,8 +347,12 @@ urlpatterns = [
 ## Polls template view 적용
 /polls/views.py
 ```python
+from django.template import loader
+from .models import Question
+
 def index(request):
     lastes_question_list = Question.objects.order_by('-pub_date')[:5]
+        # [:5] = 정렬순서에서 5개까지만 읽는다.
     template = loader.get_template('polls/index.html')
     context = {
         'latest_question_list': lastes_question_list,
@@ -369,9 +375,10 @@ def index(request):
 
 ```
 
-## Polls shortcuts render
+## Polls shortcuts render 적용
 /polls/views.py
 ```diff
+- from django.template import loader
 - template = loader.get_template('polls/index.html')
 - return HttpResponse(template.render(context, request))
 + return render(request, 'polls/index.html', context)
@@ -399,14 +406,13 @@ def detail(request, question_id):
 {% endfor %}
 </ul>
 
-
 ```
 
 ## Polls shortcuts 404
 /polls/views.py
 ```diff
-- from django.http import Http404
 - from django.shortcuts import render
+- from django.http import Http404
 + from django.shortcuts import get_object_or_404, render
 
 - try:
@@ -416,7 +422,7 @@ def detail(request, question_id):
 + question = get_object_or_404(Question, pk=question_id)
 ```
 
-## Polls delete URL: /polls
+## Polls remove URL: /polls
 /polls/template/index.html
 ```diff
 - <li><a href="/polls/{{ question.id }}/">{{ question.question_text }}</a></li>
@@ -424,10 +430,10 @@ def detail(request, question_id):
 ```
 
 /polls/urls.py
-```python
-# the 'name' value as called by the {% url %} template tag
-# path('detail/<int:question_id>/', views.detail, name='detail'),
-path('<int:question_id>/', views.detail, name='detail'),
+```diff
+- path('<int:question_id>/', views.detail, name='detail'),
++ path('detail/<int:question_id>/', views.detail, name='detail'),
+    # 되는지 확인만 해보기
 ```
 
 ## Polls route namespace 적용
@@ -463,6 +469,13 @@ app_name = 'polls'
 
 ## Polls vote, results 만들기
 /polls/views.py
+```diff
+- from django.http import HttpResponse
+- from .models import Question
++ from .models import Choice, Question
++ from django.http import HttpResponseRedirect
++ from django.urls import reverse
+```
 ```python
 def results(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
@@ -473,7 +486,7 @@ def vote(request, question_id):
     try:
         selected_choice = question.choice_set.get(pk=request.POST['choice'])
     except (KeyError, Choice.DoesNotExist):
-        #Redisplay the question voting form.
+        # Redisplay the question voting form.
         return render(request, 'polls/detail.html', {
             'question': question,
             'error_message': "You didn't select a choice.",
@@ -500,6 +513,8 @@ def vote(request, question_id):
 ```
 
 ## Polls generic view
+/polls/views.py 안에 함수를 클래스화 한다.
+
 /polls/urls.py
 ```diff
 - path('', views.index, name='index'),
@@ -514,6 +529,8 @@ def vote(request, question_id):
 
 /polls/views.py
 ```python
+from django.views import generic
+
 # def index(request):
 # def detail(request, question_id):
 # def results(request, question_id):
@@ -536,7 +553,7 @@ class ResultsView(generic.DetailView):
 
 ```
 
-## Polls make test
+## Polls make test bug
 /polls/tests.py
 ```python
 import datetime
@@ -561,7 +578,7 @@ python3 manage.py test polls
 ```
 
 ## Polls fixup was_published_recently
-/polls/tests.py
+/polls/models.py
 ```diff
 - return self.pub_date >= timezone.now() - datetime.timedelta(days=1)
 + now = timezone.now()
@@ -596,14 +613,19 @@ python3 manage.py test polls
 
 ```
 
-## Polls test view
+실행
+```sh
+python3 manage.py test polls
+```
+
+## Polls view 개선시키기
 /polls/views.py
 ```python
 from django.utils import timezone
 
 class IndexView(generic.ListView):
     # ...
-    def gef get_queryset(self):
+    def get_queryset(self):
         """
         Return the last five published questions (not including those set to be
         published in the future).
@@ -727,15 +749,29 @@ class QuestionDetailViewTests(TestCase):
 body {
   background: white url("images/background.gif") no-repeat;
 }
-
+/* 이미지 파일 /polls/static/polls/images/background.gif */
 li a {
   color: green;
 }
 
 ```
 
+재시작 하고 확인
+
 ## Polls Admin fields order change
 /polls/admin.py
+```python
+class QuestionAdmin(admin.ModelAdmin):
+    fields = ['pub_date', 'question_text']
+
+```
+```diff
+- admin.site.register(Question)
++ admin.site.register(Question, QuestionAdmin)
+```
+
+Admin Question 확인
+
 ```python
 class QuestionAdmin(admin.ModelAdmin):
     # fields = ['pub_date', 'question_text']
@@ -744,9 +780,9 @@ class QuestionAdmin(admin.ModelAdmin):
         ('Date information', {'fields': ['pub_date']}),
     ]
 
-admin.site.register(Question, QuestionAdmin)
-
 ```
+
+Admin Question 확인
 
 ## Polls Admin register Choice
 ```diff
@@ -813,9 +849,9 @@ cd {해당경로}/contrib/admin/templates/admin
 open .
 ```
 
-/django_tutorial/templates/admin 폴더 생성 후 복사하기
+/templates/admin 폴더 생성 후 복사하기
 
-/django_tutorial/templates/admin/base_site.html
+/templates/admin/base_site.html
 ```html
 <!-- <h1 id="site-name"><a href="{% url 'admin:index' %}">{{ site_header|default:_('Semin administration') }}</a></h1> -->
 <h1 id="site-name"><a href="{% url 'admin:index' %}">Semin admin</a></h1>
