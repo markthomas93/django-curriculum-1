@@ -306,6 +306,9 @@ c.delete() # DB 해당 레코드 삭제
 ```sh
 python3 manage.py createsuperuser
 ```
+```sql
+SELECT * FROM auth_user;
+```
 
 /polls/admin.py
 ```python
