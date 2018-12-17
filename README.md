@@ -358,6 +358,7 @@ from .models import Question
 
 def index(request):
     lastes_question_list = Question.objects.order_by('-pub_date')[:5]
+        # '-pub_date' = 내림차순(DESC), 'pub_date' = 오름차순(ASC)
         # [:5] = 정렬순서에서 5개까지만 읽는다.
     template = loader.get_template('polls/index.html')
     context = {
@@ -418,8 +419,8 @@ def detail(request, question_id):
 /polls/views.py
 ```diff
 - from django.shortcuts import render
-- from django.http import Http404
 + from django.shortcuts import get_object_or_404, render
+- from django.http import Http404
 
 - try:
 -     question = Question.objects.get(pk=question_id)
@@ -439,7 +440,6 @@ def detail(request, question_id):
 ```diff
 - path('<int:question_id>/', views.detail, name='detail'),
 + path('detail/<int:question_id>/', views.detail, name='detail'),
-    # 되는지 확인만 해보기
 ```
 
 ## Polls route namespace 적용
