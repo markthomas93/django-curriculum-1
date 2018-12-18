@@ -552,14 +552,16 @@ class IndexView(generic.ListView):
         return Question.objects.order_by('-pub_date')[:5]
 
 class DetailView(generic.DeleteView):
-    model = Question
     template_name = 'polls/detail.html'
+    model = Question
 
 class ResultsView(generic.DetailView):
-    model = Question
     template_name = 'polls/results.html'
+    model = Question
 
 ```
+
+[generic view 예시](https://docs.djangoproject.com/ko/2.1/ref/class-based-views/generic-display/#listview)
 
 ## Polls make test bug
 /polls/tests.py
