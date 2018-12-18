@@ -653,7 +653,7 @@ class DetailView(generic.DetailView):
 
 ```
 
-[__lte](http://brownbears.tistory.com/63)
+[__lte 또는 다른 조건 키워드](http://brownbears.tistory.com/63)
 
 /polls/tests.py
 ```python
@@ -758,11 +758,11 @@ class QuestionDetailViewTests(TestCase):
 /polls/static/polls/style.css
 ```css
 body {
-  background: white url("images/background.gif") no-repeat;
+    background: white url("images/background.gif") no-repeat;
 }
 /* 이미지 파일 /polls/static/polls/images/background.gif */
 li a {
-  color: green;
+    color: green;
 }
 
 ```
