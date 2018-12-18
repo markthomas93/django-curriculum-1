@@ -640,11 +640,10 @@ class IndexView(generic.ListView):
         Return the last five published questions (not including those set to be
         published in the future).
         """
-        return Question.objects.filter(
-            pub_date__lte=timezone.now()
-        ).order_by('-pub_date')[:5]
+        return Question.objects.filter(pub_date__lte=timezone.now()).order_by('-pub_date')[:5]
+            # __lte = 같거나 작다
 
-class DetailView(generic.DeleteView):
+class DetailView(generic.DetailView):
     # ...
     def get_queryset(self):
         """
@@ -653,6 +652,8 @@ class DetailView(generic.DeleteView):
         return Question.objects.filter(pub_date__lte=timezone.now())
 
 ```
+
+[__lte](http://brownbears.tistory.com/63)
 
 /polls/tests.py
 ```python
