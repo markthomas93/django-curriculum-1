@@ -359,7 +359,8 @@ from .models import Question
 def index(request):
     lastes_question_list = Question.objects.order_by('-pub_date')[:5]
         # '-pub_date' = 내림차순(DESC), 'pub_date' = 오름차순(ASC)
-        # [:5] = 정렬순서에서 5개까지만 읽는다.
+        # [:5] = 정렬순서에서 5개까지 레코드를 읽는다.
+        # [0] = 첫번째 레코드만 읽는다.
     template = loader.get_template('polls/index.html')
     context = {
         'latest_question_list': lastes_question_list,
@@ -440,6 +441,7 @@ def detail(request, question_id):
 ```diff
 - path('<int:question_id>/', views.detail, name='detail'),
 + path('detail/<int:question_id>/', views.detail, name='detail'),
+    # 확인 후에 path('<int:question_id>/', views.detail, name='detail'), 되돌린다.
 ```
 
 ## Polls route namespace 적용
@@ -477,10 +479,10 @@ app_name = 'polls'
 /polls/views.py
 ```diff
 - from django.http import HttpResponse
-- from .models import Question
-+ from .models import Choice, Question
 + from django.http import HttpResponseRedirect
 + from django.urls import reverse
+- from .models import Question
++ from .models import Choice, Question
 ```
 ```python
 def results(request, question_id):
